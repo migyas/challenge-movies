@@ -1,10 +1,20 @@
+/* eslint-disable import/no-duplicates */
 import React from 'react';
+import { parseISO, format } from 'date-fns';
 
 interface ResultsProps {
   results: any;
 }
 
 const Results: React.FC<ResultsProps> = ({ results }) => {
+  // const formattedDate = (date: any): any => {
+  //   if (date) {
+  //     const dateData = parseISO(date);
+  //     console.log(dateData);
+  //     const dateFormated = format(dateData, 'dd-MM-yyyy', { locale: pt });
+  //     console.log(dateFormated);
+  //   }
+  // };
   console.log(results);
   return (
     <>
@@ -20,11 +30,11 @@ const Results: React.FC<ResultsProps> = ({ results }) => {
           >
             <div>
               <img
-                src={e.poster_path}
+                src={`https://image.tmdb.org/t/p/w500/${e.poster_path}`}
                 alt="text img"
                 style={{
                   height: '31rem',
-                  width: '21rem',
+                  width: '25rem',
                   backgroundColor: '#116193',
                 }}
               />
@@ -56,6 +66,11 @@ const Results: React.FC<ResultsProps> = ({ results }) => {
                   {e.title}
                 </h2>
               </div>
+              <span>
+                {e.release_date.length
+                  ? format(parseISO(e.release_date), 'dd-MM-yyyy')
+                  : 'Sem data cadastrada'}
+              </span>
             </div>
           </div>
         ))

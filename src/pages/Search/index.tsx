@@ -8,18 +8,24 @@ import * as S from './styled';
 import Results from '../../components/Results';
 
 const Search: React.FC = () => {
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<any[]>([]);
   const apiKey = '17d590edad1d1b5dc2e7686fcbf28aff';
 
   async function getResults(title: any) {
-    await axios
-      .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=pt-BR&query=${title}`,
-      )
-      .then((response: any) => {
-        setResults(response.data.results);
-        console.log(response.data);
-      });
+    if (title.length >= 2) {
+      await axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=pt-BR&query=${title}`,
+        )
+        .then((response: any) => {
+          setResults(response.data.results);
+          console.log(response.data);
+        });
+    } else if (title.length === 0) {
+      setResults((state: any) => ({
+        ...state,
+      }));
+    }
   }
 
   return (
